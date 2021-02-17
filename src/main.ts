@@ -4,6 +4,7 @@ import '@/router/helper'
 import router from '@/router'
 import store from '@/store'
 import App from '@/App.vue'
+import '@/assets/style/global.scss'
 
 Vue.config.productionTip = false
 
