@@ -1,11 +1,11 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue'
+import Vuex from 'vuex'
+import { FormState } from '@/store/modules/form'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
-});
+export interface RootState {
+    form: FormState
+}
+
+export default new Vuex.Store<RootState>({})

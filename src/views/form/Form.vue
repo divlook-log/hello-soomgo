@@ -1,8 +1,6 @@
 <template>
-    <div class="page-home">
-        <button type="button">
-            사무실 대청소 신청하기
-        </button>
+    <div class="page-form">
+        form
     </div>
 </template>
 
@@ -10,7 +8,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Home extends Vue {}
+export default class Form extends Vue {}
 </script>
 
 <style lang="scss" scoped></style>
