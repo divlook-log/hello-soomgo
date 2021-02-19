@@ -78,5 +78,9 @@ export default class Btn extends Vue {
     &:disabled {
         opacity: 0.4;
     }
+
+    &:focus {
+        outline: 0;
+    }
 }
 </style>
