@@ -4,7 +4,7 @@ import { Controls } from '@/libs/storybook'
 import Btn from '@/components/forms/Btn.vue'
 
 export default ((): Meta => ({
-    title: 'Components/Button',
+    title: 'Components/Btn',
     component: Btn,
     argTypes: {
         text: {
@@ -12,6 +12,12 @@ export default ((): Meta => ({
         },
         type: {
             control: Controls.select(['button', 'submit']),
+        },
+        primary: {
+            control: Controls.boolean(),
+        },
+        disabled: {
+            control: Controls.boolean(),
         },
     },
 }))()
@@ -23,6 +29,8 @@ const Template: Story = (args, { argTypes }) => ({
         <Btn
             :type="type"
             @click="onClick"
+            :primary="primary"
+            :disabled="disabled"
         >
             {{ text }}
         </Btn>
@@ -32,8 +40,30 @@ const Template: Story = (args, { argTypes }) => ({
     },
 })
 
-export const WithText = Template.bind({})
-WithText.args = {
+export const Default = Template.bind({})
+Default.args = {
     text: 'Hello Button',
     type: 'button',
+}
+
+export const Primary = Template.bind({})
+Primary.args = {
+    text: 'Hello Button',
+    type: 'button',
+    primary: true,
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+    text: 'Hello Button',
+    type: 'button',
+    disabled: true,
+}
+
+export const PrimaryWithDisabled = Template.bind({})
+PrimaryWithDisabled.args = {
+    text: 'Hello Button',
+    type: 'button',
+    primary: true,
+    disabled: true,
 }
