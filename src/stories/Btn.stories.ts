@@ -28,9 +28,9 @@ const Template: Story = (args, { argTypes }) => ({
     template: `
         <Btn
             :type="type"
-            @click="onClick"
             :primary="primary"
             :disabled="disabled"
+            @click="onClick"
         >
             {{ text }}
         </Btn>
