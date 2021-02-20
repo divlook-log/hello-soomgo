@@ -16,6 +16,9 @@ export default ((): Meta => ({
         disabled: {
             control: Controls.boolean(),
         },
+        block: {
+            control: Controls.boolean(),
+        },
         required: {
             control: Controls.boolean(),
         },
@@ -40,6 +43,7 @@ const Template: Story = (args, { argTypes }) => ({
             :value="value"
             :placeholder="placeholder"
             :disabled="disabled"
+            :block="block"
             :required="required"
             :maxlength="maxlength"
             :error="error"
@@ -73,10 +77,17 @@ Disabled.args = {
     disabled: true,
 }
 
+export const Block = Template.bind({})
+Block.args = {
+    value: '',
+    block: true,
+}
+
 export const Maxlength = Template.bind({})
 Maxlength.args = {
     value: '',
     placeholder: '10글자까지 입력할 수 있습니다.',
+    block: true,
     maxlength: 10,
 }
 
@@ -90,5 +101,6 @@ export const Required = Template.bind({})
 Required.args = {
     value: '',
     placeholder: '입력값이 없으면 에러가 발생합니다.',
+    block: true,
     required: true,
 }

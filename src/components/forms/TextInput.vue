@@ -4,6 +4,7 @@
         :class="{
             'ui-textInput--disabled': disabled,
             'ui-textInput--error': state.error,
+            'ui-textInput--block': block,
         }"
     >
         <input
@@ -44,6 +45,12 @@ export default class TextInput extends Vue {
         default: false,
     })
     readonly disabled!: boolean
+
+    @Prop({
+        type: Boolean,
+        default: false,
+    })
+    readonly block!: boolean
 
     @Prop({
         type: Boolean,
@@ -154,6 +161,8 @@ export default class TextInput extends Vue {
 @import '@/assets/style/variable.scss';
 
 .ui-textInput {
+    display: inline-block;
+
     input {
         display: block;
         width: 100%;
@@ -211,6 +220,10 @@ export default class TextInput extends Vue {
 
     &.ui-textInput--disabled {
         opacity: 0.4;
+    }
+
+    &.ui-textInput--block {
+        display: block;
     }
 }
 </style>
