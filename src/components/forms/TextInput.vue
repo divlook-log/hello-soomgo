@@ -123,13 +123,15 @@ export default class TextInput extends Vue {
             this.state.error = !this.isValid
 
             /**
-             * @event error
+             * @event update:error
+             * @type { boolean }
              */
             this.$emit('update:error', this.state.error)
         }
 
         /**
          * @event input
+         * @type { string }
          */
         this.$emit('input', nextValue)
     }
@@ -141,6 +143,7 @@ export default class TextInput extends Vue {
 
         /**
          * @event change
+         * @type { Event }
          */
         this.$emit('change', e)
     }
