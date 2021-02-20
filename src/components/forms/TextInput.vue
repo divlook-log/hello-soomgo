@@ -8,9 +8,10 @@
     >
         <input
             type="text"
-            v-model="inputValue"
+            :value="inputValue"
             :placeholder="placeholder"
             :disabled="disabled"
+            :required="required"
             :maxlength="maxlength"
             @input="onInput"
             @change="onChange"
@@ -45,6 +46,12 @@ export default class TextInput extends Vue {
     readonly disabled!: boolean
 
     @Prop({
+        type: Boolean,
+        default: false,
+    })
+    readonly required!: boolean
+
+    @Prop({
         type: Number,
         default: 255,
     })
@@ -64,6 +71,14 @@ export default class TextInput extends Vue {
 
     get inputValueLength() {
         return this.inputValue.length
+    }
+
+    get isValid() {
+        if (this.required) {
+            return !!this.inputValue
+        }
+
+        return true
     }
 
     @Watch('value')
@@ -101,15 +116,16 @@ export default class TextInput extends Vue {
 
         const target = e?.target as HTMLInputElement
         const nextValue = target?.value ?? ''
-        const nextError = !nextValue
 
-        if (nextError !== this.state.error) {
-            this.state.error = nextError
+        this.inputValue = nextValue
+
+        if (this.isValid === this.state.error) {
+            this.state.error = !this.isValid
 
             /**
              * @event error
              */
-            this.$emit('update:error', nextError)
+            this.$emit('update:error', this.state.error)
         }
 
         /**

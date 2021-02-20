@@ -16,6 +16,9 @@ export default ((): Meta => ({
         disabled: {
             control: Controls.boolean(),
         },
+        required: {
+            control: Controls.boolean(),
+        },
         maxlength: {
             control: Controls.number({
                 min: 1,
@@ -37,6 +40,7 @@ const Template: Story = (args, { argTypes }) => ({
             :value="value"
             :placeholder="placeholder"
             :disabled="disabled"
+            :required="required"
             :maxlength="maxlength"
             :error="error"
             @input="onInput"
@@ -80,4 +84,11 @@ export const Error = Template.bind({})
 Error.args = {
     value: '',
     error: true,
+}
+
+export const Required = Template.bind({})
+Required.args = {
+    value: '',
+    placeholder: '입력값이 없으면 에러가 발생합니다.',
+    required: true,
 }
