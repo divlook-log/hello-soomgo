@@ -6,14 +6,14 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
     {
-        path: '/',
-        name: 'Home',
-        component: Home,
-    },
-    {
         path: '/form',
         name: 'Form',
-        component: () => import('@/views/form/Form.vue'),
+        component: () => import('@/views/Form.vue'),
+    },
+    {
+        path: '*',
+        name: 'Home',
+        component: Home,
     },
 ]
 
