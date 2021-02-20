@@ -4,6 +4,7 @@
         :class="{
             'ui-selectbox--selected': isSelected,
             'ui-selectbox--disabled': disabled,
+            'ui-selectbox--block': block,
             'ui-selectbox--error': state.error,
         }"
         :value="selectValue"
@@ -57,6 +58,12 @@ export default class Selectbox extends Vue {
         default: false,
     })
     readonly disabled!: boolean
+
+    @Prop({
+        type: Boolean,
+        default: false,
+    })
+    readonly block!: boolean
 
     @Prop({
         type: Boolean,
@@ -146,18 +153,25 @@ export default class Selectbox extends Vue {
 @import '@/assets/style/variable.scss';
 
 $bg-image: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAxOGgxOFYwSDB6Ii8+PHBhdGggc3Ryb2tlPSIjRTFFMUUxIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE0LjQzNCA2Ljc1MWwtNS40IDUuNC01LjQtNS40Ii8+PC9nPjwvc3ZnPg==';
+$padding: 0.75rem;
 
 .ui-selectbox {
     display: inline-block;
-    width: 100%;
     border-radius: 0.25rem;
     border: 1px solid $color-line;
-    padding: 0.75rem;
+    padding: $padding;
+    padding-right: $padding * 2 + 1rem;
     font-size: 1rem;
     appearance: none;
     color: $color-nobel;
     outline: 0;
-    background: url($bg-image) no-repeat 98% 50%;
+    background-color: $color-white;
+    background-image: url($bg-image);
+    background-repeat: no-repeat;
+    background-position-x: 98%;
+    background-position-x: calc(100% - #{$padding});
+    background-position-y: 50%;
+    background-size: 1rem;
 
     option {
         &:disabled {
@@ -186,6 +200,11 @@ $bg-image: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMj
             border-color: $color-danger;
             box-shadow: 0 0 0 0.2rem rgba($color: $color-danger, $alpha: 0.25);
         }
+    }
+
+    &.ui-selectbox--block {
+        display: block;
+        width: 100%;
     }
 }
 </style>

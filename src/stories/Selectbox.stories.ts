@@ -22,6 +22,9 @@ export default ((): Meta => ({
         disabled: {
             control: Controls.boolean(),
         },
+        block: {
+            control: Controls.boolean(),
+        },
         error: {
             control: Controls.boolean(),
         },
@@ -41,6 +44,7 @@ const Template: Story = (args, { argTypes }) => ({
             :option="option"
             :required="required"
             :disabled="disabled"
+            :block="block"
             :error="error"
             :optional="optional"
             @input="onInput"
@@ -89,4 +93,10 @@ export const Disabled = Template.bind({})
 Disabled.args = {
     option: ['A', 'B', 'C', 'D'],
     disabled: true,
+}
+
+export const Block = Template.bind({})
+Block.args = {
+    option: ['A', 'B', 'C', 'D'],
+    block: true,
 }
