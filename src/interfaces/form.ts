@@ -1,3 +1,10 @@
+export enum FormType {
+    Checkbox = 1,
+    Radio = 2,
+    TextInput = 3,
+    Selectbox = 4,
+}
+
 export interface ItemOption {
     id: number
     text: string
