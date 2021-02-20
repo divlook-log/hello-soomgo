@@ -156,7 +156,6 @@ export default class TextInput extends Vue {
         &:focus {
             outline: 0;
             border-color: $color-primary;
-            outline: 0;
             box-shadow: 0 0 0 0.2rem rgba($color: $color-primary, $alpha: 0.25);
         }
     }
@@ -173,9 +172,15 @@ export default class TextInput extends Vue {
         }
     }
 
-    &.ui-textInput--error:not(.ui-textInput--disabled) {
+    &.ui-textInput--error {
         input {
             border-color: $color-danger;
+
+            &:focus {
+                border-color: $color-danger;
+                box-shadow: 0 0 0 0.2rem
+                    rgba($color: $color-danger, $alpha: 0.25);
+            }
         }
 
         .textInput-info {
