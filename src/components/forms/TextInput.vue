@@ -3,13 +3,13 @@
         class="ui-textInput"
         :class="{
             'ui-textInput--disabled': disabled,
-            'ui-textInput--error': state.error,
+            'ui-textInput--error': formState.error,
             'ui-textInput--block': block,
         }"
     >
         <input
             type="text"
-            :value="inputValue"
+            :value="formState.value"
             :placeholder="placeholder"
             :disabled="disabled"
             :required="required"
@@ -36,11 +36,6 @@ export default class TextInput extends Vue {
     readonly value!: string
 
     @Prop({
-        type: String,
-    })
-    readonly placeholder!: string
-
-    @Prop({
         type: Boolean,
         default: false,
     })
@@ -59,30 +54,34 @@ export default class TextInput extends Vue {
     readonly required!: boolean
 
     @Prop({
-        type: Number,
-        default: 255,
-    })
-    readonly maxlength!: number
-
-    @Prop({
         type: Boolean,
         default: false,
     })
     readonly error!: boolean
 
-    inputValue = ''
+    @Prop({
+        type: String,
+    })
+    readonly placeholder!: string
 
-    state = {
+    @Prop({
+        type: Number,
+        default: 255,
+    })
+    readonly maxlength!: number
+
+    formState = {
+        value: '',
         error: false,
     }
 
     get inputValueLength() {
-        return this.inputValue.length
+        return this.formState.value.length
     }
 
     get isValid() {
         if (this.required) {
-            return !!this.inputValue
+            return !!this.formState.value
         }
 
         return true
@@ -90,29 +89,29 @@ export default class TextInput extends Vue {
 
     @Watch('value')
     watchValue(value: string) {
-        if (this.inputValue === value) {
+        if (this.formState.value === value) {
             return
         }
 
-        this.inputValue = value
+        this.formState.value = value
     }
 
     @Watch('error')
     watchError(error: boolean) {
-        if (this.state.error === error) {
+        if (this.formState.error === error) {
             return
         }
 
-        this.state.error = error
+        this.formState.error = error
     }
 
     created() {
         if (this.value) {
-            this.inputValue = this.value
+            this.formState.value = this.value
         }
 
         if (this.error) {
-            this.state.error = this.error
+            this.formState.error = this.error
         }
     }
 
@@ -124,16 +123,16 @@ export default class TextInput extends Vue {
         const target = e?.target as HTMLInputElement
         const nextValue = target?.value ?? ''
 
-        this.inputValue = nextValue
+        this.formState.value = nextValue
 
-        if (this.isValid === this.state.error) {
-            this.state.error = !this.isValid
+        if (this.isValid === this.formState.error) {
+            this.formState.error = !this.isValid
 
             /**
              * @event update:error
              * @type { boolean }
              */
-            this.$emit('update:error', this.state.error)
+            this.$emit('update:error', this.formState.error)
         }
 
         /**

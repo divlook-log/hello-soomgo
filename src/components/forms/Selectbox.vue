@@ -5,9 +5,9 @@
             'ui-selectbox--selected': isSelected,
             'ui-selectbox--disabled': disabled,
             'ui-selectbox--block': block,
-            'ui-selectbox--error': state.error,
+            'ui-selectbox--error': formState.error,
         }"
-        :value="selectValue"
+        :value="formState.value"
         :required="required"
         :disabled="disabled"
         @change="onChange"
@@ -36,24 +36,6 @@ export default class Selectbox extends Vue {
     readonly value!: string
 
     @Prop({
-        type: String,
-        default: '선택해주세요.',
-    })
-    readonly placeholder!: string
-
-    @Prop({
-        type: Array,
-        default: () => [],
-    })
-    readonly option!: string[]
-
-    @Prop({
-        type: Boolean,
-        default: false,
-    })
-    readonly required!: boolean
-
-    @Prop({
         type: Boolean,
         default: false,
     })
@@ -69,7 +51,25 @@ export default class Selectbox extends Vue {
         type: Boolean,
         default: false,
     })
+    readonly required!: boolean
+
+    @Prop({
+        type: Boolean,
+        default: false,
+    })
     readonly error!: boolean
+
+    @Prop({
+        type: String,
+        default: '선택해주세요.',
+    })
+    readonly placeholder!: string
+
+    @Prop({
+        type: Array,
+        default: () => [],
+    })
+    readonly option!: string[]
 
     @Prop({
         type: Boolean,
@@ -77,14 +77,13 @@ export default class Selectbox extends Vue {
     })
     readonly optional!: boolean
 
-    selectValue = ''
-
-    state = {
+    formState = {
+        value: '',
         error: false,
     }
 
     get isSelected() {
-        return !!this.selectValue
+        return !!this.formState.value
     }
 
     get isValid() {
@@ -97,29 +96,29 @@ export default class Selectbox extends Vue {
 
     @Watch('value')
     watchValue(value: string) {
-        if (this.selectValue === value) {
+        if (this.formState.value === value) {
             return
         }
 
-        this.selectValue = value
+        this.formState.value = value
     }
 
     @Watch('error')
     watchError(error: boolean) {
-        if (this.state.error === error) {
+        if (this.formState.error === error) {
             return
         }
 
-        this.state.error = error
+        this.formState.error = error
     }
 
     created() {
         if (this.value) {
-            this.selectValue = this.value
+            this.formState.value = this.value
         }
 
         if (this.error) {
-            this.state.error = this.error
+            this.formState.error = this.error
         }
     }
 
@@ -131,16 +130,16 @@ export default class Selectbox extends Vue {
         const target = e?.target as HTMLSelectElement
         const nextValue = target?.value ?? ''
 
-        if (nextValue === this.selectValue) {
+        if (nextValue === this.formState.value) {
             return
         }
 
-        this.selectValue = nextValue
+        this.formState.value = nextValue
 
-        if (this.isValid === this.state.error) {
-            this.state.error = !this.isValid
+        if (this.isValid === this.formState.error) {
+            this.formState.error = !this.isValid
 
-            this.$emit('update:error', this.state.error)
+            this.$emit('update:error', this.formState.error)
         }
 
         this.$emit('input', nextValue)
@@ -183,6 +182,10 @@ $padding: 0.75rem;
         outline: 0;
         border-color: $color-primary;
         box-shadow: 0 0 0 0.2rem rgba($color: $color-primary, $alpha: 0.25);
+    }
+
+    &:not(.ui-selectbox--disabled) {
+        cursor: pointer;
     }
 
     &.ui-selectbox--selected {
