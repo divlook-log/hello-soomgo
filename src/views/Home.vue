@@ -7,11 +7,16 @@
                 사무실 대청소 신청하기
             </Btn>
         </router-link>
+
+        <p v-if="lastAnswerData">
+            <pre><code>{{ lastAnswerData }}</code></pre>
+        </p>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { useFormStore } from '@/store/modules/form'
 import Btn from '@/components/forms/Btn.vue'
 
 @Component({
@@ -19,7 +24,26 @@ import Btn from '@/components/forms/Btn.vue'
         Btn,
     },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+    get formStore() {
+        return useFormStore()
+    }
+
+    get lastAnswerData() {
+        const lastAnswerData = this.formStore.lastAnswerData
+
+        if (lastAnswerData) {
+            try {
+                return JSON.stringify(lastAnswerData, null, 4)
+            } catch (error) {
+                console.error(error)
+                return ''
+            }
+        }
+
+        return ''
+    }
+}
 </script>
 
 <style lang="scss" scoped>
