@@ -10,8 +10,8 @@ export default ((): Meta => ({
     component: Checklist,
     argTypes: {
         value: {
-            control: Controls.array(),
-            defaultValue: [],
+            control: false,
+            defaultValue: '',
         },
         name: {
             control: false,

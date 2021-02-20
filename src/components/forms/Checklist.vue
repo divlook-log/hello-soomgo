@@ -18,15 +18,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component
 export default class Checklist extends Vue {
     @Prop({
-        type: Array,
-        default: () => [],
+        type: String,
     })
-    readonly value!: string[]
+    readonly value!: string
 
     @Prop({
         type: String,
@@ -55,6 +54,26 @@ export default class Checklist extends Vue {
 
     selectedValues: string[] = []
 
+    @Watch('value')
+    watchValue(value: string, prevValue: string) {
+        if (value === prevValue) {
+            return
+        }
+
+        if (value) {
+            this.selectedValues = value.split(',')
+            return
+        }
+
+        this.selectedValues = []
+    }
+
+    created() {
+        if (this.value) {
+            this.selectedValues = this.value.split(',')
+        }
+    }
+
     setValue(value: string) {
         const index = this.selectedValues.indexOf(value)
 
@@ -75,7 +94,7 @@ export default class Checklist extends Vue {
             }
         }
 
-        this.$emit('input', this.selectedValues)
+        this.$emit('input', this.selectedValues.join(','))
     }
 }
 </script>
